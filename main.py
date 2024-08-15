@@ -2,16 +2,18 @@ from langchain_openai import OpenAI
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
-def generate_dog_name(animal_type, color):
-    llm= OpenAI(temperature=0.5)
+def oscar(filme, ano, llm):
     prompt_animal_name= PromptTemplate(
-        input_variables=['animal_type', 'color'],
-        template= "Você tem um {animal_type} filhote novo da cor {color} e gostaria de dar um nome legal para ele, de 5 sugestões de possíveis nomes"
+        input_variables=['filme', 'ano'],
+        template= "Quantos oscars o filme {filme} ganhou em {ano}"
     )
     animal_name_chain= prompt_animal_name | llm | StrOutputParser()
-    response = animal_name_chain.invoke({'animal_type':animal_type, 'color':color})
+    response = animal_name_chain.invoke({'filme':filme, 'ano':ano})
     
     return response
 
+llm= OpenAI(temperature=0.5, model='gpt-3.5-turbo-instruct')
+
 if __name__=="__main__":
-    print(generate_dog_name("dragão", "preto"))
+    response=oscar("Oppenheimer", "2024", llm)
+    print(response)
