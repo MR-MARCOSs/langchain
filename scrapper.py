@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
+
 def get_text_from_url(url):
     # Faz a solicitação HTTP para a URL
     response = requests.get(url)
@@ -11,7 +12,7 @@ def get_text_from_url(url):
         soup = BeautifulSoup(response.content, "html.parser")
 
         # Remove scripts e styles do conteúdo
-        for script_or_style in soup(['script', 'style']):
+        for script_or_style in soup(["script", "style"]):
             script_or_style.decompose()
 
         # Obtém o texto puro da página

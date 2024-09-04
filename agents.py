@@ -5,6 +5,8 @@ from langchain_openai import ChatOpenAI
 from langchain.tools import tool
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.agents import AgentExecutor, create_openai_tools_agent
+from dotenv import load_dotenv
+load_dotenv()
 
 def get_response_from_openai(message):
     
@@ -57,9 +59,12 @@ prompt = ChatPromptTemplate.from_messages(
 )
 
 agent = create_openai_tools_agent(llm, toolkit, prompt)
-agent_executor = AgentExecutor(agent=agent, tool=toolkit, verbose=True)
+agent_executor = AgentExecutor(agent=agent, tools=toolkit, verbose=True)
 
-result = agent_executor.invoke({"input": "Hello!"})
+#result = agent_executor.invoke({"input": "Hello!"})
+#result = agent_executor.invoke({"input": r"Eu quero que você formate esse meu código python. Path: C:\Users\marco\Desktop\codes\langchain\scrapper.py"})
+result = agent_executor.invoke({"input": "Quais as métricas padrão que o MLFlow fornece para avaliar um modelo de texto baseado na documentção dessa url aqui: https://mlflow.org/docs/latest/llms/llm-evaluate/index.html"})
+
 
 print(result["output"])
     
